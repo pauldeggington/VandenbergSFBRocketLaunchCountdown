@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,33 +12,38 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: black; /* Changed background color to black */
-            color: white; /* Changed text color to white */
+            background: url("p-1-falcon-heavy.jpg") no-repeat center center fixed;
+            background-size: cover;
+            backdrop-filter: blur(5px) brightness(60%);
+            backdrop-filter: ;
+            position: fixed;
+            color: white;
         }
+
         #launch-info {
-          width: 100vw;
+            width: 100vw;
             text-align: center;
             margin-bottom: 20px;
-        }
-        #t-time {
-            font-size: 8vw; /* Increased font size for time text */
-            color: red; /* Changed time text color to red */
-            background: black; /* Changed background color to black */
             padding: 20px;
             border-radius: 10px;
         }
+
+        #t-time {
+            font-size: 8vw;
+            color: white;
+        }
+
         #launch-name {
-          font-size: 3vw;
+            font-size: 3vw;
         }
     </style>
 </head>
+
 <body>
     <div id="launch-info">
-        
         <div id="t-time">Loading...</div>
         <h2 id="launch-name">Loading...</h2>
     </div>
-
     <script>
         async function fetchLaunchData() {
             const url = "https://fdo.rocketlaunch.live/json/launches/next/5";
@@ -47,8 +53,11 @@
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 const data = await response.json();
-                console.log('API Response:', data); // Log the entire response to inspect the structure
-                const launches = data?.result?.filter(launch => launch.pad?.location?.name === 'Vandenberg SFB');
+                console.log('API Response:', data);
+                const launches = data.result.filter(launch =>
+                    launch.pad?.location?.name === 'Vandenberg SFB' &&
+                    launch.pad?.location?.id === 60
+                );
                 if (!launches || launches.length === 0) {
                     throw new Error('No upcoming launches from Vandenberg SFB');
                 }
@@ -62,7 +71,7 @@
         function calculateTTime(launchTime) {
             const currentTime = new Date();
             const launchDateTime = new Date(launchTime);
-            console.log(`Launch Time: ${launchTime}, Parsed Launch Time: ${launchDateTime}`); // Log the times to debug
+            console.log(`Launch Time: ${launchTime}, Parsed Launch Time: ${launchDateTime}`);
             const timeDiff = launchDateTime - currentTime;
 
             if (timeDiff <= 0) {
@@ -75,20 +84,21 @@
             const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
 
             if (days > 0) {
-                return `T-   ${days}d : ${hours}h : ${minutes}m : ${seconds}s`; // Added colons between days, hours, minutes, and seconds
+                return `T- ${days}d : ${hours}h : ${minutes}m : ${seconds}s`;
             } else {
-                return `T-   ${hours}h : ${minutes}m : ${seconds}s`; // Added colons between hours, minutes, and seconds
+                return `T- ${hours}h : ${minutes}m : ${seconds}s`;
             }
         }
 
         async function displayTTime() {
             try {
                 const launch = await fetchLaunchData();
-                console.log('Launch Object:', launch); // Log the launch object to inspect its structure
+                console.log('Launch Object:', launch);
                 const launchName = launch.name || 'Unnamed Launch';
                 const spaceAgency = launch.provider?.name || 'Unknown Agency';
                 document.getElementById('launch-name').innerText = `${launchName} - ${spaceAgency}`;
-                const launchTime = launch.t0; // Use 't0' field for launch time
+                const launchTime = launch.t0;
+
                 setInterval(() => {
                     const tTime = calculateTTime(launchTime);
                     document.getElementById('t-time').innerText = tTime;
@@ -101,4 +111,5 @@
         displayTTime();
     </script>
 </body>
+
 </html>
