@@ -22,7 +22,7 @@
             width: 100%;
             height: 100%;
             color: white;
-            font-family: kontora;
+            font-family: notomono;
         }
 
         #launch-info {
@@ -44,6 +44,11 @@
         @font-face {
             font-family: kontora;
             src: url(kontora-bold.otf);
+            font-weight: bold;
+        }
+        @font-face {
+            font-family: notomono;
+            src: url(NotoMono-Regular.ttf);
             font-weight: bold;
         }
     </style>
@@ -99,9 +104,9 @@
             const paddedSeconds = String(seconds).padStart(2, '0');
 
             if (days > 0) {
-                return `T- ${paddedDays}D : ${paddedHours}H : ${paddedMinutes}M : ${paddedSeconds}S`;
+                return `T-${paddedDays}D:${paddedHours}H:${paddedMinutes}M:${paddedSeconds}S`;
             } else {
-                return `T- ${paddedHours}H : ${paddedMinutes}M : ${paddedSeconds}S`;
+                return `T-${paddedHours}H:${paddedMinutes}M:${paddedSeconds}S`;
             }
         }
 
