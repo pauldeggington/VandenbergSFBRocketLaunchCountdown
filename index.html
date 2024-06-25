@@ -93,10 +93,15 @@
             const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
 
+            const paddedDays = String(days).padStart(2, '0');
+            const paddedHours = String(hours).padStart(2, '0');
+            const paddedMinutes = String(minutes).padStart(2, '0');
+            const paddedSeconds = String(seconds).padStart(2, '0');
+
             if (days > 0) {
-                return `T- ${days}D : ${hours}H : ${minutes}M : ${seconds}S`;
+                return `T- ${paddedDays}D : ${paddedHours}H : ${paddedMinutes}M : ${paddedSeconds}S`;
             } else {
-                return `T- ${hours}H : ${minutes}M : ${seconds}S`;
+                return `T- ${paddedHours}H : ${paddedMinutes}M : ${paddedSeconds}S`;
             }
         }
 
