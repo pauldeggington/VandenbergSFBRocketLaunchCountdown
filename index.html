@@ -22,6 +22,7 @@
             width: 100%;
             height: 100%;
             color: white;
+            font-family: kontora;
         }
 
         #launch-info {
@@ -38,6 +39,12 @@
 
         #launch-name {
             font-size: 3vw;
+        }
+
+        @font-face {
+            font-family: kontora;
+            src: url(kontora-bold.otf);
+            font-weight: bold;
         }
     </style>
 </head>
@@ -87,9 +94,9 @@
             const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
 
             if (days > 0) {
-                return `T- ${days}d : ${hours}h : ${minutes}m : ${seconds}s`;
+                return `T- ${days}D : ${hours}H : ${minutes}M : ${seconds}S`;
             } else {
-                return `T- ${hours}h : ${minutes}m : ${seconds}s`;
+                return `T- ${hours}H : ${minutes}M : ${seconds}S`;
             }
         }
 
