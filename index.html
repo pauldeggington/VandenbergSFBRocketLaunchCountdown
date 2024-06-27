@@ -41,21 +41,29 @@
             font-size: 3vw;
         }
 
+        #launch-time {
+            font-size: 2vw;
+            margin-top: 10px;
+        }
+
         @font-face {
             font-family: kontora;
             src: url(kontora-bold.otf);
             font-weight: bold;
         }
+
         @font-face {
             font-family: notomono;
             src: url(NotoMono-Regular.ttf);
             font-weight: bold;
         }
+
         @font-face {
             font-family: rubikmono;
             src: url(RubikMonoOne-Regular.ttf);
             font-weight: bold;
         }
+
         @font-face {
             font-family: fragmentmono;
             src: url(FragmentMono-Regular.ttf);
@@ -68,6 +76,7 @@
     <div id="launch-info">
         <div id="t-time">Loading...</div>
         <h2 id="launch-name">Loading...</h2>
+        <div id="launch-time">Loading...</div>
     </div>
     <script>
         async function fetchLaunchData() {
@@ -126,11 +135,13 @@
                 console.log('Launch Object:', launch);
                 const launchName = launch.name || 'Unnamed Launch';
                 const spaceAgency = launch.provider?.name || 'Unknown Agency';
+                const launchTime = new Date(launch.t0).toLocaleString();
+
                 document.getElementById('launch-name').innerText = `${launchName} - ${spaceAgency}`;
-                const launchTime = launch.t0;
+                document.getElementById('launch-time').innerText = `Launch Time: ${launchTime}`;
 
                 setInterval(() => {
-                    const tTime = calculateTTime(launchTime);
+                    const tTime = calculateTTime(launch.t0);
                     document.getElementById('t-time').innerText = tTime;
                 }, 1000);
             } catch (error) {
